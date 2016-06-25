@@ -15,9 +15,14 @@
 <div class="container" ng-controller="controller">
   <h1>Lottoland</h1>
 
-<div class="winning-numbers" ng-repeat="number in numbers">
-<h2>Winning Numbers</h2>
-<ul>
+<div class="winning-numbers">
+  <h2>Last Draw</h2>
+<h3>Draw Date</h3>
+  <p>{{drawDate}}</p>
+<h3>Winnings</h3>
+  <p>{{winnings}}</p>
+<h3>Winning Numbers</h3>
+<ul ng-repeat="number in numbers">
 <li>{{number}}</li>
 </ul>
 </div>
@@ -33,8 +38,9 @@ var App = angular.module('lottoland',[])
           .controller('controller', function($scope, AppFact) {
             //console.log("Testing the Page For CallsBacks");
             AppFact.getData(function(data) {
-              $
+              $scope.drawDate = data.last.date.day + "/" + data.last.date.month + "/" + data.last.date.year;
               $scope.numbers = data.last.numbers;
+              $scope.winnings = data.last.Winners;
             });
           })
           .factory('AppFact', function($http) {
