@@ -1,0 +1,58 @@
+<!DOCTYPE>
+<html ng-app="lottoland">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="public/components/bootstrap/dist/css/bootstrap.min.css">
+  <script src="public/components/jquery/dist/jquery.min.js"></script>
+  <script src="public/components/bootstrap/dist/js/bootstrap.min.js"></script>
+<title>Lottoland</title>
+<script>
+
+</script>
+</head>
+<body>
+<div class="container" ng-controller="controller">
+  <h1>Lottoland</h1>
+
+<div class="winning-numbers" ng-repeat="number in numbers">
+<h2>Winning Numbers</h2>
+<ul>
+<li>{{number}}</li>
+</ul>
+</div>
+<button id="results" class="btn btn-sucess">Get Lotto Results</button>
+<div class="result">
+
+</div>
+
+<div>
+<script src="public/components/angular/angular.min.js"></script>
+<script>
+var App = angular.module('lottoland',[])
+          .controller('controller', function($scope, AppFact) {
+            //console.log("Testing the Page For CallsBacks");
+            AppFact.getData(function(data) {
+              $
+              $scope.numbers = data.last.numbers;
+            });
+          })
+          .factory('AppFact', function($http) {
+           return {
+             getData: function(successcb) {
+                var url = 'https://media.lottoland.com/api/drawings/euroJackpot';
+
+            $http.jsonp(url + "?callback=JSON_CALLBACK&data=").success(function(data,status,headers,config) {
+              console.log(data);
+
+              successcb(data);
+            }).error(function(data, status,headers, config) {
+            //  alert("Status is " + status);
+
+            });
+             }
+                        };
+          });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "lottoland",
+  "homepage": "https://github.com/jaredjohnson59/lottoland",
+  "authors": [
+    "jaredjohnson59 <jaredjohnson59@gmail.com>"
+  ],
+  "description": "Test for Lottoland Role",
+  "main": "index.html",
+  "keywords": [
+    "lottoland"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.7"
+  }
+}
