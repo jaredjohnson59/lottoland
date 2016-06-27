@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="public/components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="public/styles/lottoland.css">
   <script src="public/components/jquery/dist/jquery.min.js"></script>
   <script src="public/components/bootstrap/dist/js/bootstrap.min.js"></script>
 <title>Lottoland</title>
@@ -15,50 +16,44 @@
 <div class="container" ng-controller="controller">
   <h1>Lottoland</h1>
 
-<div class="winning-numbers">
-  <h2>Last Draw</h2>
+<div class="winning-numbers row">
+  <div class="past-draw col-xs-12 col-md-8">
+  <h2>Past Draw</h2>
 <h3>Draw Date</h3>
   <p>{{drawDate}}</p>
-<h3>Winnings</h3>
-  <p>{{winnings}}</p>
-<h3>Winning Numbers</h3>
-<ul ng-repeat="number in numbers">
-<li>{{number}}</li>
-</ul>
+  <h3>Winning Numbers</h3>
+  <ul>
+  <li ng-repeat="euroNumber in euroNumbers" class="euroNumber">{{euroNumber}}</li>
+  </ul>
+  <ul >
+  <li ng-repeat="number in numbers" class="number">{{number}}</li>
+  </ul>
+<br />
+<h3>Results</h3>
+<table class="col-md-12 table-bordered table-condensed cf">
+<thead>
+  <th>Winners</th>
+  <th>Prize</th>
+</thead>
+<tbody>
+<tr ng-repeat="odd in odds">
+  <td>{{odd.winners | number}}x</td>
+  <td>&euro;{{odd.prize | number:2}}</td>
+</tr>
+</tbody>
+</table>
 </div>
-<button id="results" class="btn btn-sucess">Get Lotto Results</button>
-<div class="result">
-
+<div class="nextDraw col-xs-6 col-md-4">
+<h2>Upcoming Draw</h2>
+<h3>Draw Date</h3>
+<p>{{nextDrawDate}}</p>
+</div>
 </div>
 
 <div>
 <script src="public/components/angular/angular.min.js"></script>
-<script>
-var App = angular.module('lottoland',[])
-          .controller('controller', function($scope, AppFact) {
-            //console.log("Testing the Page For CallsBacks");
-            AppFact.getData(function(data) {
-              $scope.drawDate = data.last.date.day + "/" + data.last.date.month + "/" + data.last.date.year;
-              $scope.numbers = data.last.numbers;
-              $scope.winnings = data.last.Winners;
-            });
-          })
-          .factory('AppFact', function($http) {
-           return {
-             getData: function(successcb) {
-                var url = 'https://media.lottoland.com/api/drawings/euroJackpot';
+<script src="public/controllers/controller.js"></script>
+<script src="build/lotto.js"></script>
 
-            $http.jsonp(url + "?callback=JSON_CALLBACK&data=").success(function(data,status,headers,config) {
-              console.log(data);
-
-              successcb(data);
-            }).error(function(data, status,headers, config) {
-            //  alert("Status is " + status);
-
-            });
-             }
-                        };
-          });
-</script>
 </body>
 </html>
